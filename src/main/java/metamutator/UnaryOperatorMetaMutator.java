@@ -34,6 +34,7 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 		if (!isABooleanExpression(element)) {
 			return false;
 		}
+		
 		try {
 			Selector.getTopLevelClass(element);
 		} catch (NullPointerException e) {
@@ -59,7 +60,7 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 		return type.contains("BOOLEAN");
 	}
 	public void process(CtExpression<Boolean> booleanExpression) {
-		
+		/**
 		if (alreadyInHotsSpot(booleanExpression) || booleanExpression.toString().contains(".is(\"")) {
 			System.out
 					.println(String
@@ -67,10 +68,10 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 									booleanExpression));
 			return;
 		}
-
+**/
 		mutateOperator(booleanExpression,UNARY_OPERATORS);
 	}
-	
+	/**
 	private boolean alreadyInHotsSpot(CtElement element) {
 		CtElement parent = element.getParent();
 		while (!isTopLevel(parent) && parent != null) {
@@ -84,7 +85,7 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 	}
 	private boolean isTopLevel(CtElement parent) {
 		return parent instanceof CtClass && ((CtClass) parent).isTopLevel();
-	}
+	}**/
 	
 	private void mutateOperator(CtExpression<?> booleanExpression, EnumSet<UnaryOperator> operators) {
 		int thisIndex = ++index;
@@ -98,8 +99,8 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 					if (op == UnaryOperator.NOT) {
 						expr = "!(" + originalExpression + ")";
 					}
-					return String.format("("+ PREFIX + "%s.is(\"%s\") && (%s))",
-							thisIndex,op, expr);
+					return String.format("("+ PREFIX + "%s.is(%s) && (%s))",
+							thisIndex,op.getClass().getCanonicalName()+"."+op.toString(), expr);
 				}).collect(Collectors.joining(" || "));
 		
 		
