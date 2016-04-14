@@ -26,7 +26,7 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 	
 	private static final EnumSet<UnaryOperator> UNARY_OPERATORS = EnumSet.of(UnaryOperator.SAME,UnaryOperator.NOT);
 	
-	private Set<CtElement> hotSpots = Sets.newHashSet();
+	//private Set<CtElement> hotSpots = Sets.newHashSet();
 	
 	@Override
 	public boolean isToBeProcessed(CtExpression<Boolean> element) {
@@ -111,7 +111,5 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 		((CtExpression<Boolean>)booleanExpression).replace(codeSnippet);
 		
 		Selector.generateSelector(booleanExpression,UnaryOperator.SAME,thisIndex,UNARY_OPERATORS,PREFIX);
-		
-		hotSpots.add(booleanExpression);
 	}
 }
