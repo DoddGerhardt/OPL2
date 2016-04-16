@@ -9,6 +9,7 @@ import com.google.common.collect.Sets;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtCodeSnippetExpression;
 import spoon.reflect.code.CtExpression;
+import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtAnonymousExecutable;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtConstructor;
@@ -51,6 +52,9 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 			return false;
 		}
 		
+		if (element instanceof CtStatement) {
+			return false;
+		}
 		return true;
 	}
 	public boolean isABooleanExpression(CtExpression<Boolean> element) {
