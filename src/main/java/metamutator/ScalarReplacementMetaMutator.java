@@ -1,13 +1,16 @@
 package metamutator;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 import metamutator.UnaryOperatorMetaMutator.UnaryOperator;
@@ -105,8 +108,9 @@ public class ScalarReplacementMetaMutator extends AbstractProcessor<CtVariable<?
 		}
 		sb.append(variable.getSimpleName());
 		snippet.setValue(sb.toString());
-		EnumSet<?> set = EnumSet.copyOf(list.toArray());
-		Selector.generateSelector(variable,i,index,set,PREFIX);
+		//EnumSet<Integer> en = new HashSet<Integer>(list);
+		
+		//Selector.generateSelector(variable,i,index,en,PREFIX);
 
 		((CtStatement)(variable)).replace(snippet);
 	}

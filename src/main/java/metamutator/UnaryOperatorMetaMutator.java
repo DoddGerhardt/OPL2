@@ -26,8 +26,6 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 	
 	private static final EnumSet<UnaryOperator> UNARY_OPERATORS = EnumSet.of(UnaryOperator.SAME,UnaryOperator.NOT);
 	
-	//private Set<CtElement> hotSpots = Sets.newHashSet();
-	
 	@Override
 	public boolean isToBeProcessed(CtExpression<Boolean> element) {
 		
@@ -56,36 +54,15 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 		return true;
 	}
 	public boolean isABooleanExpression(CtExpression<Boolean> element) {
+		if (element.getType() == null) {
+			return false;
+		}
 		String type = element.getType().toString().toUpperCase();
 		return type.contains("BOOLEAN");
 	}
 	public void process(CtExpression<Boolean> booleanExpression) {
-		/**
-		if (alreadyInHotsSpot(booleanExpression) || booleanExpression.toString().contains(".is(\"")) {
-			System.out
-					.println(String
-							.format("Expression '%s' ignored because it is included in previous hot spot",
-									booleanExpression));
-			return;
-		}
-**/
 		mutateOperator(booleanExpression,UNARY_OPERATORS);
 	}
-	/**
-	private boolean alreadyInHotsSpot(CtElement element) {
-		CtElement parent = element.getParent();
-		while (!isTopLevel(parent) && parent != null) {
-			if (hotSpots.contains(parent))
-				return true;
-
-			parent = parent.getParent();
-		}
-
-		return false;
-	}
-	private boolean isTopLevel(CtElement parent) {
-		return parent instanceof CtClass && ((CtClass) parent).isTopLevel();
-	}**/
 	
 	private void mutateOperator(CtExpression<?> booleanExpression, EnumSet<UnaryOperator> operators) {
 		int thisIndex = ++index;
