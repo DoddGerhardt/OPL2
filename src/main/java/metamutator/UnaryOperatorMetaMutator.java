@@ -85,8 +85,9 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 				.createCodeSnippetExpression();
 		codeSnippet.setValue('(' + newExpression + ')');
 		
-		((CtExpression<Boolean>)booleanExpression).replace(codeSnippet.compile());
-		
 		Selector.generateSelector(booleanExpression,UnaryOperator.SAME,thisIndex,UNARY_OPERATORS,PREFIX);
+
+		((CtExpression<Boolean>)booleanExpression).replace(codeSnippet);
+		
 	}
 }
