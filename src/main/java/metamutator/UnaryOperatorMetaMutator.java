@@ -39,15 +39,15 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 			return false;
 		}
 		
-		if (element.getParent(CtConstructor.class) != null) {
+		if (element.isParentInitialized() && element.getParent(CtConstructor.class) != null) {
 			return false;
 		}
 		
-		if (element.getParent(CtField.class) != null) {
+		if (element.isParentInitialized() && element.getParent(CtField.class) != null) {
 				return false;
 		}
 		
-		if (element.getParent(CtAnonymousExecutable.class) != null) {
+		if (element.isParentInitialized() && element.getParent(CtAnonymousExecutable.class) != null) {
 			return false;
 		}
 		
@@ -85,7 +85,7 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 				.createCodeSnippetExpression();
 		codeSnippet.setValue('(' + newExpression + ')');
 		
-		((CtExpression<Boolean>)booleanExpression).replace(codeSnippet);
+		((CtExpression<Boolean>)booleanExpression).replace(codeSnippet.compile());
 		
 		Selector.generateSelector(booleanExpression,UnaryOperator.SAME,thisIndex,UNARY_OPERATORS,PREFIX);
 	}
