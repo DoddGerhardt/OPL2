@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Sets;
 
 import spoon.processing.AbstractProcessor;
+import spoon.reflect.code.CtAssignment;
 import spoon.reflect.code.CtCodeSnippetExpression;
 import spoon.reflect.code.CtExpression;
+import spoon.reflect.code.CtFieldWrite;
 import spoon.reflect.code.CtStatement;
+import spoon.reflect.code.CtVariableWrite;
 import spoon.reflect.declaration.CtAnonymousExecutable;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtConstructor;
@@ -55,6 +58,9 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 		if (element instanceof CtStatement) {
 			return false;
 		}
+		if (element instanceof CtFieldWrite || element instanceof CtVariableWrite) {
+			return false;
+		}
 		return true;
 	}
 	public boolean isABooleanExpression(CtExpression<Boolean> element) {
@@ -92,6 +98,5 @@ public class UnaryOperatorMetaMutator extends AbstractProcessor<CtExpression<Boo
 		Selector.generateSelector(booleanExpression,UnaryOperator.SAME,thisIndex,UNARY_OPERATORS,PREFIX);
 
 		((CtExpression<Boolean>)booleanExpression).replace(codeSnippet);
-		
 	}
 }
